@@ -1,37 +1,4 @@
-function movieInfo(commands) {
-    let movies = {};
-
-    for (let command of commands) {
-        let parts = command.split(' ');
-        let name = '';
-        let director = '';
-        let date = '';
-
-        if (parts[0] === 'addMovie') {
-            name = parts.slice(1).join(' ');
-            movies[name] = {};
-        } else if (parts.includes('directedBy')) {
-            director = parts.slice(parts.indexOf('directedBy') + 1).join(' ');
-            name = parts.slice(0, parts.indexOf('directedBy')).join(' ');
-            if (movies[name]) {
-                movies[name].director = director;
-            }
-        } else if (parts.includes('onDate')) {
-            date = parts.slice(parts.indexOf('onDate') + 1).join(' ');
-            name = parts.slice(0, parts.indexOf('onDate')).join(' ');
-            if (movies[name]) {
-                movies[name].date = date;
-            }
-        }
-    }
-
-    for (let movie in movies) {
-        if (movies[movie].director && movies[movie].date) {
-            console.log(JSON.stringify({name: movie, ...movies[movie]}));
-        }
-    }
-}
-movieInfo([
+const array = [
     'addMovie Fast and Furious',
     'addMovie Godfather',
     'Inception directedBy Christopher Nolan',
@@ -40,4 +7,45 @@ movieInfo([
     'Fast and Furious onDate 30.07.2018',
     'Batman onDate 01.08.2018',
     'Fast and Furious directedBy Rob Cohen'
-]);
+    ]
+let movies = []
+class Movie{
+    constructor(name, director, date){
+        this.name = name
+        this.director = director
+        this.date = date
+    }
+    print(){
+        if (this.name && this.director && this.date) 
+            console.log(JSON.stringify(this));
+    }
+}
+function fun(array){
+    for (str of array){
+        if (str.split(" ")[0] == 'addMovie'){
+            movies.push(new Movie(str.split('addMovie')[1].trim()))
+        }
+        else if (str.includes("directedBy")){
+            movie = getMovie(str.split('directedBy')[0].trim())
+            if (movie){
+                movie.director = str.split('directedBy')[1].trim()
+            }
+        }
+        else if (str.includes("onDate")){
+            movie = getMovie(str.split('onDate')[0].trim())
+            if (movie){
+                movie.date = str.split('onDate')[1].trim()
+            }
+        }
+    } 
+    function getMovie(movieName) {
+        for (let movie of movies) {
+            if (movie.name === movieName) {
+                return movie;
+            }
+        }
+        return null;
+    }
+}
+fun(array)
+movies.forEach(movie => movie.print())

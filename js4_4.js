@@ -22,7 +22,6 @@ function progressBar(n) {
     }
 }
 
-
 progressBar(30);
 progressBar(50);
 progressBar(100);

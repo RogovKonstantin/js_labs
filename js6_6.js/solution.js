@@ -17,7 +17,6 @@ function attachEventsListeners() {
         });
     });
 }
-
 function convertTime(value, fromUnit) {
     let days, hours, minutes, seconds;
 
